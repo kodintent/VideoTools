@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Window
+    x:Class="VideoTools.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:VideoTools"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="VideoTools">
+
+    <Grid Padding="20">
+        <!-- Define the grid with 8 rows and 6 columns -->
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <!-- Row 0: Button and TextBlock -->
+        <Grid Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="6"
+              Margin="0" Padding="5" BorderThickness="2" BorderBrush="#555555">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="btn_files_select" Grid.Column="0" Content="Select Files" Click="Click_btn_files_select" ToolTipService.ToolTip="Select Video Files" Style="{StaticResource AppButtonStyle}"/>
+            <TextBlock x:Name="tb_files_text" Grid.Column="1" Text=""/>
+        </Grid>
+
+        <!-- Row 1: Codec, Volume, Strength -->
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Codec" Style="{StaticResource LabelTextblockStyle}"/>
+        <ComboBox x:Name="cb_encoding" Grid.Row="1" Grid.Column="1" SelectionChanged="Changed_cb_encoding" Style="{StaticResource ParamComboBoxStyle}"/>
+        <TextBlock Grid.Row="1" Grid.Column="2" Text="Volume" Style="{StaticResource LabelTextblockStyle}"/>
+        <ComboBox x:Name="cb_volume" Grid.Row="1" Grid.Column="3" SelectionChanged="Changed_cb_volume" Style="{StaticResource ParamComboBoxStyle}"/>
+        <TextBlock Grid.Row="1" Grid.Column="4" Text="Strength" Style="{StaticResource LabelTextblockStyle}"/>
+        <ComboBox x:Name="cb_stab_frames" Grid.Row="1" Grid.Column="5" SelectionChanged="Changed_cb_stab_frames" Style="{StaticResource ParamComboBoxStyle}"/>
+
+        <!-- Row 2: Quality, SoundFX, Zoom % -->
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Quality" Style="{StaticResource LabelTextblockStyle}"/>
+        <ComboBox x:Name="cb_quality" Grid.Row="2" Grid.Column="1" SelectionChanged="Changed_cb_quality" Style="{StaticResource ParamComboBoxStyle}"/>
+        <TextBlock Grid.Row="2" Grid.Column="2" Text="SoundFX" Style="{StaticResource LabelTextblockStyle}"/>
+        <ComboBox x:Name="cb_sound_fx" Grid.Row="2" Grid.Column="3" SelectionChanged="Changed_cb_sound_fx" Style="{StaticResource ParamComboBoxStyle}"/>
+        <TextBlock Grid.Row="2" Grid.Column="4" Text="Zoom %" Style="{StaticResource LabelTextblockStyle}"/>
+        <ComboBox x:Name="cb_stab_zoom" Grid.Row="2" Grid.Column="5" SelectionChanged="Changed_cb_stab_zoom" Style="{StaticResource ParamComboBoxStyle}"/>
+
+        <!-- Row 3: Divider Line -->
+        <Rectangle Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="6" Height="1" Fill="#555555" Margin="5"/>
+
+        <!-- Row 4: Size, CropOffset, Rotate -->
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="Resize" Style="{StaticResource LabelTextblockStyle}"/>
+        <ComboBox x:Name="cb_size" Grid.Row="4" Grid.Column="1" SelectionChanged="Changed_cb_size" Style="{StaticResource ParamComboBoxStyle}"/>
+        <TextBlock Grid.Row="4" Grid.Column="2" Text="CropOffset" Style="{StaticResource LabelTextblockStyle}"/>
+        <ComboBox x:Name="cb_crop_offset" Grid.Row="4" Grid.Column="3" SelectionChanged="Changed_cb_crop_offset" Style="{StaticResource ParamComboBoxStyle}"/>
+        <TextBlock Grid.Row="4" Grid.Column="4" Text="Rotate ⭮" Style="{StaticResource LabelTextblockStyle}"/>
+        <ComboBox x:Name="cb_rotate" Grid.Row="4" Grid.Column="5" SelectionChanged="Changed_cb_rotate" Style="{StaticResource ParamComboBoxStyle}"/>
+
+
+        <!-- Row 5: ScaleOrCrop, CropAR, Flip -->
+        <StackPanel Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
+            <RadioButton x:Name="rb_scale" Content="Scale" GroupName="ScaleOrCrop" IsChecked="True" Checked="Changed_rb_scale_crop"/>
+            <RadioButton x:Name="rb_crop" Content="Crop" GroupName="ScaleOrCrop" Checked="Changed_rb_scale_crop"/>
+        </StackPanel>
+        <TextBlock Grid.Row="5" Grid.Column="2" Text="CropAR" Style="{StaticResource LabelTextblockStyle}"/>
+        <ComboBox x:Name="cb_crop_ar" Grid.Row="5" Grid.Column="3" SelectionChanged="Changed_cb_crop_ar" Style="{StaticResource ParamComboBoxStyle}"/>
+        <TextBlock Grid.Row="5" Grid.Column="4" Text="Flip" Style="{StaticResource LabelTextblockStyle}"/>
+        <ComboBox x:Name="cb_flip" Grid.Row="5" Grid.Column="5" SelectionChanged="Changed_cb_flip" Style="{StaticResource ParamComboBoxStyle}"/>
+
+
+        <!-- Row 6: Start/Reset/Stop buttons -->
+        <Grid Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="6" Padding="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="btn_start" Grid.Column="0" Content="START" Click="Click_btn_Start" ToolTipService.ToolTip="Process Videos" Style="{StaticResource AppButtonStyle}"/>
+            <Button x:Name="btn_reset" Grid.Column="1" Content="RESET" Click="Click_btn_ResetParams" ToolTipService.ToolTip="Reset Parameters to Default" Style="{StaticResource AppButtonStyle}"/>
+            <Button x:Name="btn_stop" Grid.Column="2" Content="STOP" Click="Click_btn_Stop" ToolTipService.ToolTip="Stop Processing After Current" Style="{StaticResource AppButtonStyle}"/>
+        </Grid>
+
+        <!-- Row 7: Feedback TextBox -->
+        <TextBox x:Name="tb_feedback" TextWrapping="Wrap" Grid.Row="7" Grid.Column="0" Grid.ColumnSpan="6" Padding="20,20,20,20" ScrollViewer.VerticalScrollBarVisibility="Auto" Text=""/>
+    </Grid>
+</Window>
